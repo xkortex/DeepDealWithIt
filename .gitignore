@@ -1,3 +1,9 @@
+# Data
+model.png
+*.np[yz]
+*.hdf5
+logs/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -84,6 +90,7 @@ ENV/
 
 # Spyder project settings
 .spyderproject
+.idea
 
 # Rope project settings
 .ropeproject
