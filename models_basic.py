@@ -159,7 +159,7 @@ class SaveableModel:
     def update_cfg(self, dictlike):
         self._cfg.update(dictlike)
 
-    def setup_callbacks(self, checkpoint_verbose=1, save_best_only=False, path_weights=None):
+    def setup_callbacks(self, checkpoint_verbose=1, save_best_only=False, path_weights=None, tqdm=False):
         path_weights = self.path_weights if path_weights is None else path_weights
         now = time.strftime("%Y%m%d-%H%M%S")
         checkpointer = ModelCheckpoint(monitor='val_acc', filepath=path_weights, verbose=checkpoint_verbose,
@@ -167,6 +167,9 @@ class SaveableModel:
         csvlogger = CSVLogger(self.path_log + now + '.csv', append=True)  # todo point this to proper location
         tensorboard = TensorBoard()
         self.callbacks = [checkpointer, csvlogger, tensorboard]
+        if tqdm:
+            import keras_tqdm
+            self.callbacks.append(keras_tqdm.TQDMCallback())
 
     @property
     def cfg(self): return self._cfg
